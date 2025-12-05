@@ -502,13 +502,13 @@
                 <!-- Front (English) -->
                 <div class="card-face card-front">
                     <h3 id="fcFront" style="font-weight:400; line-height:1.5; font-size:1.4rem;">English Sentence</h3>
-                    <button class="audio-btn-fc" onclick="event.stopPropagation(); playCurrentCard('en')">🔊</button>
+                    <button class="audio-btn-fc" onclick="speak(event, document.getElementById('fcFront').innerText, 'en-US')">🔊</button>
                     <p style="margin-top:20px; color:#aaa; font-size:0.9rem;">(Tap to flip)</p>
                 </div>
                 <!-- Back (Spanish) -->
                 <div class="card-face card-back">
                     <h3 id="fcBack" style="font-weight:bold; line-height:1.4; font-size:1.4rem;">Español</h3>
-                    <button class="audio-btn-fc" onclick="event.stopPropagation(); playCurrentCard('es')">🔊</button>
+                    <button class="audio-btn-fc" onclick="speak(event, document.getElementById('fcBack').innerText, 'es-ES')">🔊</button>
                     <hr style="width:50%; opacity:0.3; margin:15px 0;">
                     <div style="text-align:left; width:100%;">
                         <p style="font-size:0.9rem; margin:5px 0;">🇬🇧 <span id="fcExpEn">Explanation</span></p>
@@ -697,27 +697,32 @@
     
     function toggleTheme() { document.body.classList.toggle('dark-mode'); }
 
-    // TTS MEJORADO: Auto-selecciona voces premium (Google/Microsoft)
-    function speak(text, lang = 'es-ES') {
+    // TTS MEJORADO & BLINDADO
+    function speak(e, text, lang = 'es-ES') {
+        // 1. Detener propagación de eventos si existe (para evitar voltear cartas, etc.)
+        if(e && e.stopPropagation) e.stopPropagation();
+
+        // 2. Cancelar audio previo
         window.speechSynthesis.cancel();
         
-        // Detección inteligente de pausas para guiones bajos
-        // Reemplaza "___" por "..." para que la voz haga silencio en lugar de leer "guion bajo"
+        // 3. Forzar carga de voces si está vacía (común en Chrome al inicio)
+        if (voices.length === 0) {
+            voices = window.speechSynthesis.getVoices();
+        }
+
+        // 4. Limpiar texto
         const cleanText = text.replace(/_+/g, ' ... '); 
-        
         const u = new SpeechSynthesisUtterance(cleanText);
         u.lang = lang;
-        u.rate = 0.9; // Un poco más lento para claridad educativa
+        u.rate = 0.9;
 
-        // Buscar voz Premium (Google o Microsoft) que coincida con el idioma solicitado
+        // 5. Selección de voz (Premium vs Fallback)
         if(voices.length > 0) {
-            // Primer intento: Voz Premium exacta del idioma
             let bestVoice = voices.find(v => 
                 v.lang.startsWith(lang.split('-')[0]) && 
                 (v.name.includes('Google') || v.name.includes('Microsoft') || v.name.includes('Premium'))
             );
             
-            // Segundo intento: Cualquier voz del idioma
             if(!bestVoice) {
                 bestVoice = voices.find(v => v.lang.startsWith(lang.split('-')[0]));
             }
@@ -725,14 +730,8 @@
             if(bestVoice) u.voice = bestVoice;
         }
 
+        // 6. Ejecutar
         window.speechSynthesis.speak(u);
-    }
-
-    // Funciones específicas para Flashcards
-    function playCurrentCard(side) {
-        const c = flashcards[fcIdx];
-        if(side === 'en') speak(c.en, 'en-US');
-        else speak(c.es, 'es-ES');
     }
 
     // Formula Visualizer
@@ -757,7 +756,7 @@
                     <p style="font-style:italic; color:#666;">${p.en}</p>
                 </div>
                 <div class="phrase-actions">
-                    <button class="btn btn-outline" style="font-size:0.9rem; padding:6px 12px;" onclick="speak('${p.es.replace(/'/g, "\\'")}', 'es-ES')">🔊 Listen</button>
+                    <button class="btn btn-outline" style="font-size:0.9rem; padding:6px 12px;" onclick="speak(event, '${p.es.replace(/'/g, "\\'")}', 'es-ES')">🔊 Listen</button>
                     <button class="btn" style="font-size:0.9rem; padding:6px 12px; background:#ffc107; color:#333;" onclick="openExplain('${p.type.replace(/'/g, "\\'")}', '${p.es.replace(/'/g, "\\'")}', '${p.en.replace(/'/g, "\\'")}', '${p.rule.replace(/'/g, "\\'")}')">💡 Explain</button>
                 </div>
             `;
@@ -783,7 +782,7 @@
         subset.forEach((q, i) => {
             let html = `<div style="margin-bottom:20px; background:white; padding:20px; border-radius:12px; border:1px solid #eee; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
                 <p style="font-size:1.1rem; margin-bottom:10px;"><strong>${i+1}. ${q.q}</strong> 
-                <button onclick="speak('${q.q.replace(/'/g, "\\'")}', 'es-ES')" style="border:none;background:transparent;cursor:pointer; font-size:1.2rem;">🔊</button></p>
+                <button onclick="speak(event, '${q.q.replace(/'/g, "\\'")}', 'es-ES')" style="border:none;background:transparent;cursor:pointer; font-size:1.2rem;">🔊</button></p>
                 <p style="font-size:0.9rem; color:#888; margin-bottom:15px;">${q.trans}</p>
                 <div class="quiz-options-grid">`;
             q.opts.forEach(opt => {
@@ -876,7 +875,7 @@
     // Flashcards
     let fcIdx = 0;
     function flipCard(el) { 
-        // Prevent flip if clicking audio button
+        // Prevent flip if clicking audio button (Backup check)
         if(event.target.tagName === 'BUTTON') return;
         document.getElementById('cardInner').style.transform = document.getElementById('cardInner').style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)'; 
     }
@@ -896,9 +895,7 @@
 
     // Init
     window.onload = () => {
-        // Force load voices immediately for Chrome
         loadVoices();
-        
         filterPhrases('all');
         generateQuiz();
         loadStory();
