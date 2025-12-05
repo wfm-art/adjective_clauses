@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Adjective Clauses Master</title>
+    
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --dark-blue: #0056b3;
+            --green: #28a745;
+            --red: #dc3545;
+            --yellow: #f0ad4e;
+            
+            --bg-color: #f0f4f8;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --header-bg: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            --tab-bg: #f1f1f1;
+            --tab-active-bg: var(--primary-blue);
+            --tab-text: #555;
+            --tab-active-text: #ffffff;
+            --border-color: #dee2e6;
+            --light-gray-bg: #f8f9fa;
+
+            /* Categorías Específicas del Tema */
+            --cat-que: #17a2b8;    /* Que/Cual */
+            --cat-donde: #6610f2;  /* Donde */
+            --cat-quien: #e83e8c;  /* Quien */
+        }
+
+        /* Modo Oscuro */
+        body.dark-mode {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --header-bg: #1e1e1e;
+            --tab-bg: #333;
+            --tab-active-bg: var(--primary-blue);
+            --tab-text: #bbb;
+            --tab-active-text: #ffffff;
+            --border-color: #444;
+            --light-gray-bg: #2a2a2a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 20px 35px;
+            text-align: center;
+            position: relative;
+        }
+        header h1 { margin: 0; font-size: 2.5em; }
+        header p { font-size: 1.2em; opacity: 0.9; margin: 5px 0 0; }
+        
+        .header-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .control-button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .control-button:hover { background: rgba(255,255,255,0.4); }
+
+        /* Pestañas */
+        .main-tab-nav {
+            display: flex;
+            background-color: var(--tab-bg);
+            border-bottom: 3px solid var(--dark-blue);
+            overflow-x: auto;
+        }
+        .main-tab-nav button {
+            background-color: inherit; border: none; outline: none; cursor: pointer;
+            padding: 18px 20px; transition: 0.3s; font-size: 1.1em;
+            font-weight: bold; color: var(--tab-text); flex-grow: 1; white-space: nowrap;
+        }
+        .main-tab-nav button:hover { background-color: var(--border-color); }
+        .main-tab-nav button.active { background-color: var(--tab-active-bg); color: var(--tab-active-text); }
+        
+        .main-tab-content { display: none; padding: 30px; }
+        .main-tab-content.is-active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Estilos Generales */
+        h2 { color: var(--primary-blue); border-bottom: 2px solid var(--primary-blue); padding-bottom: 5px; font-size: 1.8em; margin-top: 0; }
+        h3 { color: var(--green); font-size: 1.4em; margin-top: 25px; }
+        .accent { color: var(--primary-blue); font-weight: bold; }
+        
+        /* Grilla de Comparación */
+        .comparison-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 20px; 
+        }
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+
+        .tense-box { 
+            background-color: var(--light-gray-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            padding: 20px; 
+            text-align: center; 
+            min-height: 180px;
+        }
+        .tense-box[data-cat="que"] { border-top: 5px solid var(--cat-que); }
+        .tense-box[data-cat="donde"] { border-top: 5px solid var(--cat-donde); }
+        .tense-box[data-cat="quien"] { border-top: 5px solid var(--cat-quien); }
+
+        .icon-wrapper { font-size: 4em; margin-bottom: 10px; display:block; }
+        
+        /* Video */
+        .video-container {
+            position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
+            overflow: hidden; border-radius: 8px; background: #000; margin-top: 20px; border: 1px solid var(--border-color);
+        }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* Formula Visualizer */
+        .formula-visualizer {
+            background-color: var(--light-gray-bg); border: 1px solid var(--border-color);
+            border-radius: 8px; padding: 20px; margin-top: 20px;
+        }
+        .formula-controls { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .formula-toggle {
+            padding: 10px 18px; border-radius: 8px; font-weight: bold; font-size: 1.1em;
+            cursor: pointer; background: var(--container-bg); border: 2px solid #ccc;
+            transition: all 0.2s;
+        }
+        .formula-toggle.active {
+            color: white; transform: scale(1.05); box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .ft-que.active { background: var(--cat-que); border-color: var(--cat-que); }
+        .ft-donde.active { background: var(--cat-donde); border-color: var(--cat-donde); }
+        
+        .formula-result { 
+            min-height: 100px; padding: 15px; background: var(--container-bg); border-radius: 8px; 
+            border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+            font-size: 1.3em; text-align: center; font-weight: 500;
+        }
+        .formula-card {
+            padding: 8px 12px; border-radius: 6px; font-weight: bold;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: inline-block; margin: 0 5px;
+        }
+        .fc-pronoun { background: #cce5ff; color: var(--primary-blue); border: 1px solid var(--primary-blue); }
+        .fc-antecedent { background: #d4edda; color: var(--green); border: 1px solid var(--green); }
+        
+        /* Phrase Bank */
+        .bank-controls { 
+            display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; 
+            background: var(--light-gray-bg); padding: 15px; border-radius: 8px; 
+            border: 1px solid var(--border-color); flex-wrap: wrap;
+        }
+        .bank-controls .filter-btn {
+            padding: 8px 12px; border: 2px solid transparent; border-radius: 6px;
+            font-weight: bold; cursor: pointer; transition: background 0.2s; font-size: 0.9em;
+            background: var(--container-bg);
+        }
+        .bank-controls .filter-btn[data-cat="que"] { color: var(--cat-que); border-color: var(--cat-que); }
+        .bank-controls .filter-btn[data-cat="donde"] { color: var(--cat-donde); border-color: var(--cat-donde); }
+        
+        .bank-controls .filter-btn.active { color: white; filter: brightness(1.2); }
+        .bank-controls .filter-btn[data-cat="que"].active { background: var(--cat-que); }
+        .bank-controls .filter-btn[data-cat="donde"].active { background: var(--cat-donde); }
+
+        .verb-card { 
+            background: var(--container-bg); border: 1px solid var(--border-color); 
+            border-radius: 10px; padding: 15px; margin-bottom: 15px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.2s; 
+        }
+        .verb-card[data-cat="que"] { border-left: 5px solid var(--cat-que); }
+        .verb-card[data-cat="donde"] { border-left: 5px solid var(--cat-donde); }
+        
+        .verb-card:hover { transform: translateY(-3px); }
+        .verb-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px; }
+        .verb-title { font-size: 1.3em; font-weight: bold; color: var(--primary-blue); }
+        .btn-explain { background: var(--yellow); color: #333; border: none; padding: 3px 10px; border-radius: 15px; font-size: 0.8em; cursor: pointer; font-weight: bold; margin-left: 10px; }
+        .tts-icon { cursor: pointer; margin-left: 5px; opacity: 0.8; }
+
+        /* Modal */
+        #explain-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000; display: none;
+            justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: var(--container-bg); padding: 30px; border-radius: 15px;
+            max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;
+            border: 2px solid var(--primary-blue); position: relative;
+        }
+        .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5em; cursor: pointer; }
+        .explain-block { margin-bottom: 20px; border-left: 4px solid var(--border-color); padding-left: 15px; }
+
+        /* Quiz & Practice */
+        .instruction-box { background-color: #e2e6ea; border-left: 5px solid var(--primary-blue); padding: 15px; margin-bottom: 20px; border-radius: 4px; font-style: italic; color: #555; }
+        .quiz-section { margin-bottom: 25px; padding-bottom: 25px; border-bottom: 2px dashed var(--border-color); }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .refresh-btn { font-size: 0.9em; padding: 5px 10px; background-color: var(--primary-blue); color: white; border:none; border-radius: 4px; cursor: pointer;}
+        .button-secondary { background-color: transparent; border: 1px solid var(--primary-blue); color: var(--primary-blue); }
+        .button-primary { background-color: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+
+        .quiz-question { margin-bottom: 15px; background: var(--light-gray-bg); padding: 15px; border-radius: 5px; }
+        .quiz-question button { 
+            background-color: var(--container-bg); border: 1px solid var(--primary-blue); 
+            color: var(--primary-blue); padding: 8px 15px; margin-right: 10px; margin-top: 5px;
+            border-radius: 5px; cursor: pointer;
+        }
+        .feedback { font-weight: bold; margin-left: 10px; }
+        .correct { color: var(--green); } .incorrect { color: var(--red); }
+        .explanation-text { font-size: 0.9em; color: #555; margin-top: 10px; padding: 8px; background: #e9ecef; border-radius: 4px; }
+        .story-translation { display: block; font-style: italic; color: #666; font-size: 0.9em; margin-top: 5px; margin-bottom: 15px; border-left: 3px solid #ddd; padding-left: 10px; }
+
+        /* Story */
+        .interactive-story { background: #fffbe6; border: 1px solid #ffe58f; padding: 20px; border-radius: 8px; font-size: 1.1em; line-height: 2; }
+        .interactive-story select { padding: 2px 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
+        body.dark-mode .interactive-story { background: #2c2c20; border-color: #444; color: #eee; }
+
+        /* Drag Drop */
+        .sorter-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .dropzone { min-height: 200px; background: var(--light-gray-bg); border: 3px dashed var(--border-color); border-radius: 8px; padding: 10px; }
+        .dropzone h4 { text-align: center; margin-top: 0; }
+        .draggable { 
+            background-color: var(--container-bg); border: 1px solid #ccc; 
+            padding: 10px; margin-bottom: 8px; border-radius: 5px; cursor: pointer; 
+            display: inline-block; margin-right: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .draggable.selected { border: 2px solid var(--primary-blue); background-color: #e6f7ff; }
+
+        /* Flashcards */
+        .flashcard-app { display: flex; flex-direction: column; align-items: center; }
+        .flashcard-container { width: 90%; max-width: 500px; height: 300px; perspective: 1000px; margin-bottom: 30px; }
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 10px; }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; border-radius: 10px; box-sizing: border-box; font-size: 1.4em; }
+        .card-front { background: var(--container-bg); border: 2px solid var(--primary-blue); }
+        .card-back { background: var(--light-gray-bg); border: 2px solid var(--green); color: var(--dark-blue); transform: rotateY(180deg); }
+        
+        .big-emoji { font-size: 3.5rem; display: block; margin-bottom: 10px; }
+    </style>
+</head>
+<body class="">
+
+    <div class="container">
+        <header>
+            <div class="header-controls">
+                <button class="control-button" onclick="toggleLang()" id="btn-lang">EN / ES</button>
+                <button class="control-button" onclick="toggleTheme()">☀️/🌙</button>
+            </div>
+            <h1 data-lang-key="header_title">Adjective Clauses</h1>
+            <p data-lang-key="header_subtitle">Que, El cual, Donde & More</p>
+        </header>
+        
+        <nav class="main-tab-nav">
+            <button class="main-tab-link active" onclick="changeMainTab(event, 'tab-metaphor')" data-lang-key="tab_1">🌡️ The Concept</button>
+            <button class="main-tab-link" onclick="changeMainTab(event, 'tab-formacion')" data-lang-key="tab_2">✍️ The Formula</button>
+            <button class="main-tab-link" onclick="changeMainTab(event, 'tab-bank')" data-lang-key="tab_bank">📚 Phrase Bank</button>
+            <button class="main-tab-link" onclick="changeMainTab(event, 'tab-practica')" data-lang-key="tab_3">🧠 Interactive Practice</button>
+            <button class="main-tab-link" onclick="changeMainTab(event, 'tab-flashcards')" data-lang-key="tab_4">📇 Flashcards</button>
+        </nav>
+
+        <main>
+            <!-- TAB 1: CONCEPT -->
+            <div id="tab-metaphor" class="main-tab-content is-active">
+                <h2 data-lang-key="metaphor_title">Linking Words (Pronouns)</h2>
+                
+                <div class="comparison-grid">
+                    <div class="tense-box" data-cat="que">
+                        <span class="icon-wrapper" style="color: var(--cat-que);">📦/👤</span>
+                        <h3 style="color: var(--cat-que);" data-lang-key="soft_title">Que / El cual</h3>
+                        <p data-lang-key="soft_desc">Used for <strong>Things</strong> or <strong>People</strong>. 'Que' is the most common.</p>
+                        <p><em>"El libro <strong>que</strong> compré..."</em></p>
+                    </div>
+                    <div class="tense-box" data-cat="donde">
+                        <span class="icon-wrapper" style="color: var(--cat-donde);">🏠</span>
+                        <h3 style="color: var(--cat-donde);" data-lang-key="advice_title">Donde</h3>
+                        <p data-lang-key="advice_desc">Used specifically for <strong>Places</strong>.</p>
+                        <p><em>"La ciudad <strong>donde</strong> vivo..."</em></p>
+                    </div>
+                    <div class="tense-box" data-cat="quien">
+                        <span class="icon-wrapper" style="color: var(--cat-quien);">👤</span>
+                        <h3 style="color: var(--cat-quien);" data-lang-key="urgent_title">Quien / Quienes</h3>
+                        <p data-lang-key="urgent_desc">Used only for <strong>People</strong>, often after a preposition or comma.</p>
+                        <p><em>"La chica con <strong>quien</strong> hablé..."</em></p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;" data-lang-key="video_title">Video Tutorial</h3>
+                <div class="video-container">
+                    <iframe src="https://drive.google.com/file/d/1GvLKweVVyGK7NV56g-Lo3DvjSXqjQwW2/preview" allow="autoplay"></iframe>
+                </div>
+
+                <!-- FORMULA VISUALIZER -->
+                <h3 style="margin-top: 30px;" data-lang-key="viz_title">Interactive Formula</h3>
+                <div class="formula-visualizer">
+                    <p data-lang-key="viz_desc">Select a grammar structure to visualize.</p>
+                    <div class="formula-controls">
+                        <div class="formula-toggle ft-que active" data-type="que" onclick="showViz(this, 'El libro', 'que', 'leí ayer', 'Object ➡ QUE')">Things/People (Que)</div>
+                        <div class="formula-toggle ft-donde" data-type="donde" onclick="showViz(this, 'El parque', 'donde', 'jugamos', 'Place ➡ DONDE')">Places (Donde)</div>
+                    </div>
+                    <div id="viz-result" class="formula-result">
+                        <div class='formula-card fc-antecedent'>El libro</div> <div class='formula-card fc-pronoun'>que</div> leí ayer
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: FORMULA -->
+            <div id="tab-formacion" class="main-tab-content">
+                <h2 data-lang-key="form_title">The Structure Rules</h2>
+                <div class="comparison-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="tense-box">
+                        <span class="big-emoji">📦/👤 ➡ QUE</span>
+                        <h3 style="color: var(--green);">1. General Rule</h3>
+                        <p data-lang-key="inf_rule">Use <strong>QUE</strong> for almost everything (People, Things). It's the universal connector.</p>
+                        <p class="formula-card fc-inf">Antecedent + QUE + Verb</p>
+                        <p data-lang-key="inf_ex_es">Ej: "La persona <strong class="accent">que</strong> vino."</p>
+                    </div>
+                    <div class="tense-box">
+                        <span class="big-emoji">🏠 ➡ DONDE</span>
+                        <h3 style="color: var(--red);">2. Places Rule</h3>
+                        <p data-lang-key="subj_rule">When talking about a location (where something happens), use <strong>DONDE</strong>.</p>
+                        <p class="formula-card fc-subj">Place + DONDE + Verb</p>
+                        <p data-lang-key="subj_ex_es">Ej: "La casa <strong class="accent">donde</strong> nací."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: PHRASE BANK -->
+            <div id="tab-bank" class="main-tab-content">
+                <h2 data-lang-key="bank_title">Phrase Bank</h2>
+                <div class="bank-controls">
+                    <label style="font-weight:bold; margin-right: 10px;" data-lang-key="label_filter">Filter:</label>
+                    <button class="filter-btn active" data-cat="all" onclick="filterBank(this, 'all')" data-lang-key="btn_all">All</button>
+                    <button class="filter-btn" data-cat="que" onclick="filterBank(this, 'que')" data-lang-key="btn_soft">Que / El cual</button>
+                    <button class="filter-btn" data-cat="donde" onclick="filterBank(this, 'donde')" data-lang-key="btn_advice">Donde (Places)</button>
+                </div>
+                <div id="bankContainer"></div>
+            </div>
+
+            <!-- MODAL -->
+            <div id="explain-modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                    <h2 id="modal-title">Title</h2>
+                    <div class="explain-block">
+                        <h4 data-lang-key="modal_struct_title">Structure</h4>
+                        <p class="explain-label" id="modal-struct">-</p>
+                    </div>
+                    <div class="explain-block">
+                        <h4 data-lang-key="modal_context_title">Contextual Example</h4>
+                        <p class="explain-label" id="modal-ex-es" style="font-weight:bold; margin-bottom:5px;">-</p>
+                        <p class="explain-label" id="modal-ex-en" style="font-style:italic; color:#555;">-</p>
+                    </div>
+                    <button class="refresh-btn" onclick="closeModal()" data-lang-key="btn_close">Close</button>
+                </div>
+            </div>
+
+            <!-- TAB 4: PRACTICE -->
+            <div id="tab-practica" class="main-tab-content">
+                <h2 data-lang-key="practice_main_title">Interactive Practice</h2>
+                
+                <!-- Parte 1: Quiz -->
+                <div class="quiz-section">
+                    <div class="section-header">
+                        <h3 data-lang-key="quiz_title">Part 1: Quick Quiz</h3>
+                        <button id="generate-quiz" class="refresh-btn button-secondary" data-lang-key="btn_new">New Quiz</button>
+                    </div>
+                    <div class="instruction-box">
+                        <strong>Instructions:</strong> Choose the correct relative pronoun (Que, Donde, Quien, etc.) to complete the sentence. Pay attention to what comes before the blank! 🧐
+                    </div>
+                    <div id="quiz-container"></div>
+                </div>
+
+                <!-- Parte 2: Story -->
+                <div class="quiz-section">
+                    <div class="section-header">
+                        <h3 data-lang-key="story_title">Part 2: Story Completion</h3>
+                        <button id="generate-story" class="refresh-btn button-secondary" data-lang-key="btn_new_story">New Story</button>
+                    </div>
+                    <div class="instruction-box">
+                        <strong>Instructions:</strong> Read the story and select the correct pronoun/word from the dropdown menus to connect the ideas. 📖
+                    </div>
+                    <div id="story-container" class="interactive-story"></div>
+                    <button id="check-story-btn" class="button-primary" style="margin-top: 20px;" data-lang-key="btn_check">Check Story</button>
+                </div>
+
+                <!-- Parte 3: Drag & Drop -->
+                <div class="quiz-section">
+                    <div class="section-header">
+                        <h3 data-lang-key="drag_title">Part 3: Structure Sorter</h3>
+                        <button id="generate-drag" class="refresh-btn button-secondary" data-lang-key="btn_new_match">Reset</button>
+                    </div>
+                    <div class="instruction-box">
+                        <strong>Instructions:</strong> Decide if the phrase refers to a PLACE (Donde) or a PERSON/THING (Que/Cual) and sort it into the correct box. 🧩
+                    </div>
+                    <div id="items-to-sort">
+                        <div id="drag-items-pool"></div>
+                    </div>
+                    <div class="sorter-container">
+                        <div class="dropzone" id="zone-que" onclick="handleDrop('que')"><h4 style="color: var(--cat-que);">Refers to Person/Thing (Que)</h4><div class="zone-content"></div></div>
+                        <div class="dropzone" id="zone-donde" onclick="handleDrop('donde')"><h4 style="color: var(--cat-donde);">Refers to Place (Donde)</h4><div class="zone-content"></div></div>
+                    </div>
+                    <div id="drag-feedback" class="feedback" style="margin-top:10px;"></div>
+                </div>
+            </div>
+
+            <!-- TAB 5: FLASHCARDS -->
+            <div id="tab-flashcards" class="main-tab-content">
+                <h2>Flashcards</h2>
+                <div class="flashcard-app">
+                    <div class="flashcard-container">
+                        <div class="flashcard" id="flashcard">
+                            <div class="card-face card-front" id="card-front"></div>
+                            <div class="card-face card-back" id="card-back"></div>
+                        </div>
+                    </div>
+                    <div class="flashcard-nav">
+                        <button onclick="prevCard()" class="button-secondary" data-lang-key="btn_prev">Previous</button>
+                        <button onclick="flipCard()" class="button-primary" data-lang-key="btn_flip">Flip</button>
+                        <button onclick="nextCard()" class="button-secondary" data-lang-key="btn_next">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+<script>
+
+// --- DATA ---
+const uiData = {
+    en: {
+        header_title: "Adjective Clauses", header_subtitle: "Que, El cual, Donde & More",
+        tab_1: "🌡️ The Concept", tab_2: "✍️ The Formula", tab_bank: "📚 Phrase Bank", tab_3: "🧠 Interactive Practice", tab_4: "📇 Flashcards",
+        soft_title: "Que / El cual", soft_desc: "Used for Things or People. 'Que' is universal.",
+        advice_title: "Donde", advice_desc: "Used specifically for Places.",
+        urgent_title: "Quien / Quienes", urgent_desc: "Used only for People, often after prepositions.",
+        viz_title: "Interactive Formula", viz_desc: "Select a grammar structure.",
+        form_title: "The Structure", 
+        inf_rule: "Use QUE for almost everything (People, Things).", inf_ex_es: 'Ej: "La persona <strong class="accent">que</strong> vino."',
+        subj_rule: "When talking about a location, use DONDE.", subj_ex_es: 'Ej: "La casa <strong class="accent">donde</strong> nací."',
+        bank_title: "Phrase Bank", btn_all: "All", btn_soft: "Que / El cual", btn_advice: "Donde (Places)",
+        modal_struct_title: "Structure", modal_context_title: "Contextual Example", btn_close: "Close",
+        practice_main_title: "Interactive Practice", quiz_title: "Part 1: Quick Quiz", btn_new: "New Quiz",
+        story_title: "Part 2: Story Completion", btn_new_story: "New Story", btn_check: "Check",
+        drag_title: "Part 3: Structure Sorter", btn_new_match: "Reset",
+        btn_prev: "Prev", btn_flip: "Flip", btn_next: "Next"
+    },
+    es: {
+        header_title: "Cláusulas Adjetivas", header_subtitle: "Que, El cual, Donde y Más",
+        tab_1: "🌡️ El Concepto", tab_2: "✍️ La Fórmula", tab_bank: "📚 Banco de Frases", tab_3: "🧠 Práctica Interactiva", tab_4: "📇 Tarjetas",
+        soft_title: "Que / El cual", soft_desc: "Se usa para Cosas o Personas. 'Que' es universal.",
+        advice_title: "Donde", advice_desc: "Se usa específicamente para Lugares.",
+        urgent_title: "Quien / Quienes", urgent_desc: "Se usa solo para Personas, a menudo tras preposiciones.",
+        viz_title: "Fórmula Interactiva", viz_desc: "Selecciona una estructura gramatical.",
+        form_title: "La Estructura", 
+        inf_rule: "Usa QUE para casi todo (Personas, Cosas).", inf_ex_es: 'Ej: "La persona <strong class="accent">que</strong> vino."',
+        subj_rule: "Cuando hables de ubicación, usa DONDE.", subj_ex_es: 'Ej: "La casa <strong class="accent">donde</strong> nací."',
+        bank_title: "Banco de Frases", btn_all: "Todas", btn_soft: "Que / El cual", btn_advice: "Donde (Lugares)",
+        modal_struct_title: "Estructura", modal_context_title: "Ejemplo Contextual", btn_close: "Cerrar",
+        practice_main_title: "Práctica Interactiva", quiz_title: "Parte 1: Quiz Rápido", btn_new: "Nuevo Quiz",
+        story_title: "Parte 2: Completar Historia", btn_new_story: "Nueva Historia", btn_check: "Verificar",
+        drag_title: "Parte 3: Clasificador", btn_new_match: "Reiniciar",
+        btn_prev: "Ant", btn_flip: "Voltear", btn_next: "Sig"
+    }
+};
+
+const phraseBankData = [
+    { text: "El libro que...", cat: "que", struct: "Antecedent (Thing) + QUE", ex_es: "El libro que estoy leyendo es muy interesante.", ex_en: "The book that I am reading is very interesting." },
+    { text: "La casa donde...", cat: "donde", struct: "Antecedent (Place) + DONDE", ex_es: "Esta es la casa donde viví cuando era niño.", ex_en: "This is the house where I lived when I was a child." },
+    { text: "La persona que...", cat: "que", struct: "Antecedent (Person) + QUE", ex_es: "La persona que llamó ayer es mi jefe.", ex_en: "The person who called yesterday is my boss." },
+    { text: "El restaurante donde...", cat: "donde", struct: "Antecedent (Place) + DONDE", ex_es: "Vamos al restaurante donde sirven la mejor pizza.", ex_en: "Let's go to the restaurant where they serve the best pizza." },
+    { text: "Los amigos con quienes...", cat: "que", struct: "Preposition + QUIENES", ex_es: "Los amigos con quienes viajé son muy divertidos.", ex_en: "The friends with whom I traveled are very fun." },
+    { text: "La razón por la cual...", cat: "que", struct: "Preposition + LA CUAL", ex_es: "Esa es la razón por la cual no pude ir a la fiesta.", ex_en: "That is the reason for which I couldn't go to the party." },
+    { text: "El coche que...", cat: "que", struct: "Antecedent (Thing) + QUE", ex_es: "El coche que compraste es muy rápido.", ex_en: "The car that you bought is very fast." },
+    { text: "El parque donde...", cat: "donde", struct: "Antecedent (Place) + DONDE", ex_es: "El parque donde corremos es muy grande.", ex_en: "The park where we run is very big." },
+    { text: "La ciudad en la que...", cat: "que", struct: "Preposition + LA QUE (Alternative to Donde)", ex_es: "La ciudad en la que nací es pequeña.", ex_en: "The city in which I was born is small." },
+    { text: "El estudiante quien...", cat: "que", struct: "Antecedent (Person) + QUIEN (Formal)", ex_es: "El estudiante, quien estudió mucho, aprobó el examen.", ex_en: "The student, who studied a lot, passed the exam." }
+];
+
+const quizItems = [
+    { q: "El libro (___) compré ayer es fantástico. 📖", context_en: "The book (that) I bought yesterday is fantastic.", options: ["que", "donde", "quien"], correct: 0, exp: "Book = Thing -> Use 'que'." },
+    { q: "La ciudad (___) nací es muy bonita. 🏙️", context_en: "The city (where) I was born is very pretty.", options: ["que", "donde", "quien"], correct: 1, exp: "City = Place -> Use 'donde' (or 'en la que')." },
+    { q: "El hombre con (___) hablé era muy amable. 🗣️", context_en: "The man with (whom) I spoke was very kind.", options: ["que", "donde", "quien"], correct: 2, exp: "Preposition 'con' + Person -> Use 'quien'." },
+    { q: "La película (___) vimos anoche fue aburrida. 🎬", context_en: "The movie (that) we watched last night was boring.", options: ["que", "donde", "quienes"], correct: 0, exp: "Movie = Thing -> Use 'que'." },
+    { q: "El hotel (___) nos quedamos tenía piscina. 🏨", context_en: "The hotel (where) we stayed had a pool.", options: ["que", "donde", "cual"], correct: 1, exp: "Hotel = Place -> Use 'donde'." },
+    { q: "Las chicas a (___) invité no vinieron. 👯‍♀️", context_en: "The girls (whom) I invited didn't come.", options: ["las que", "donde", "cuyas"], correct: 0, exp: "Preposition 'a' + Person -> 'las que' or 'quienes'." },
+    { q: "El tema del (___) hablamos es complicado. 💭", context_en: "The topic about (which) we spoke is complicated.", options: ["que", "cual", "quien"], correct: 1, exp: "Preposition 'del' (de+el) -> Use 'cual' (el cual)." },
+    { q: "La escuela (___) estudio es grande. 🏫", context_en: "The school (where) I study is big.", options: ["donde", "que", "quien"], correct: 0, exp: "School = Place -> Use 'donde'." },
+    { q: "El pastel (___) preparaste estaba delicioso. 🍰", context_en: "The cake (that) you made was delicious.", options: ["donde", "que", "quien"], correct: 1, exp: "Cake = Thing -> Use 'que'." },
+    { q: "Mi tía, (___) vive en Madrid, viene mañana. ✈️", context_en: "My aunt, (who) lives in Madrid, comes tomorrow.", options: ["que", "donde", "cual"], correct: 0, exp: "Person + Comma -> 'que' or 'quien'. 'Que' is very common." },
+    { q: "El lugar (___) nos conocimos. 📍", context_en: "The place (where) we met.", options: ["que", "donde", "quien"], correct: 1, exp: "Place -> Use 'donde'." },
+    { q: "Los documentos (___) necesito están en tu mesa. 📄", context_en: "The documents (that) I need are on your table.", options: ["que", "donde", "quienes"], correct: 0, exp: "Documents = Things -> Use 'que'." },
+    { q: "La razón por la (___) lo hice es secreta. 🔒", context_en: "The reason for (which) I did it is secret.", options: ["que", "cual", "donde"], correct: 1, exp: "Por + La -> Cual (por la cual)." },
+    { q: "El amigo con (___) salgo es Juan. 🕺", context_en: "The friend with (whom) I go out is Juan.", options: ["que", "quien", "donde"], correct: 1, exp: "Con + Person -> 'quien'." },
+    { q: "La cama en la (___) duermo es cómoda. 🛏️", context_en: "The bed in (which) I sleep is comfortable.", options: ["que", "donde", "quien"], correct: 0, exp: "En + La -> Que (en la que) = Donde." },
+    { q: "No encuentro el libro (___) me prestaste. 📕", context_en: "I can't find the book (that) you lent me.", options: ["que", "donde", "quien"], correct: 0, exp: "Book = Thing -> Use 'que'." },
+    { q: "El pueblo (___) crecí ha cambiado mucho. 🏡", context_en: "The town (where) I grew up has changed a lot.", options: ["que", "donde", "cual"], correct: 1, exp: "Town = Place -> Use 'donde'." },
+    { q: "Los alumnos (___) estudian aprueban. 🎓", context_en: "The students (who) study pass.", options: ["que", "donde", "cuales"], correct: 0, exp: "Students = People -> Use 'que'." },
+    { q: "Esa es la chica de la (___) te hablé. 🗣️", context_en: "That is the girl about (whom) I told you.", options: ["que", "donde", "quien"], correct: 0, exp: "De + La -> Que (de la que)." },
+    { q: "El día (___) te conocí fue especial. 📅", context_en: "The day (that/when) I met you was special.", options: ["que", "donde", "quien"], correct: 0, exp: "Time expressions usually use 'que' or 'en que'." }
+];
+
+const storyData = [
+    { title: "My New House 🏠", html: `<p>1. Esta es la casa <select><option value='c'>que</option><option value='x'>donde</option></select> compré el año pasado. <span class="story-translation">This is the house that I bought last year.</span></p><p>2. Tiene un jardín <select><option value='c'>donde</option><option value='x'>que</option></select> mis perros juegan. <span class="story-translation">It has a garden where my dogs play.</span></p>` },
+    { title: "The Best Friend 👯", html: `<p>1. Juan es el amigo <select><option value='c'>que</option><option value='x'>donde</option></select> siempre me ayuda. <span class="story-translation">Juan is the friend who always helps me.</span></p><p>2. Es la persona con <select><option value='c'>quien</option><option value='x'>que</option></select> viajo siempre. <span class="story-translation">He is the person with whom I always travel.</span></p>` },
+    { title: "The Restaurant 🍽️", html: `<p>1. Fuimos al restaurante <select><option value='c'>donde</option><option value='x'>que</option></select> sirven sushi. <span class="story-translation">We went to the restaurant where they serve sushi.</span></p><p>2. La comida <select><option value='c'>que</option><option value='x'>donde</option></select> pedimos estaba rica. <span class="story-translation">The food that we ordered was tasty.</span></p>` },
+    { title: "The Lost Item 🔑", html: `<p>1. ¿Dónde están las llaves <select><option value='c'>que</option><option value='x'>donde</option></select> dejé aquí? <span class="story-translation">Where are the keys that I left here?</span></p><p>2. Busqué en el cajón <select><option value='c'>donde</option><option value='x'>que</option></select> suelo ponerlas. <span class="story-translation">I looked in the drawer where I usually put them.</span></p>` },
+    { title: "The Teacher 👨‍🏫", html: `<p>1. El profesor <select><option value='c'>que</option><option value='x'>donde</option></select> enseña español es bueno. <span class="story-translation">The teacher who teaches Spanish is good.</span></p><p>2. La clase <select><option value='c'>donde</option><option value='x'>quien</option></select> enseña es la 101. <span class="story-translation">The classroom where he teaches is 101.</span></p>` },
+    { title: "Vacation Time 🏖️", html: `<p>1. El hotel <select><option value='c'>donde</option><option value='x'>que</option></select> dormimos era caro. <span class="story-translation">The hotel where we slept was expensive.</span></p><p>2. Las fotos <select><option value='c'>que</option><option value='x'>donde</option></select> tomamos son bonitas. <span class="story-translation">The photos that we took are pretty.</span></p>` },
+    { title: "The Computer 💻", html: `<p>1. La computadora <select><option value='c'>que</option><option value='x'>donde</option></select> uso es vieja. <span class="story-translation">The computer that I use is old.</span></p><p>2. La tienda <select><option value='c'>donde</option><option value='x'>que</option></select> la compré cerró. <span class="story-translation">The store where I bought it closed.</span></p>` },
+    { title: "The Party 🎉", html: `<p>1. La fiesta a la <select><option value='c'>que</option><option value='x'>donde</option></select> fuimos fue divertida. <span class="story-translation">The party (to which) we went was fun.</span></p><p>2. El club <select><option value='c'>donde</option><option value='x'>que</option></select> bailamos era grande. <span class="story-translation">The club where we danced was big.</span></p>` },
+    { title: "The Gift 🎁", html: `<p>1. El regalo <select><option value='c'>que</option><option value='x'>donde</option></select> recibí me encantó. <span class="story-translation">The gift that I received, I loved.</span></p><p>2. La caja en la <select><option value='c'>cual</option><option value='x'>donde</option></select> venía era roja. <span class="story-translation">The box in which it came was red.</span></p>` },
+    { title: "The City 🏙️", html: `<p>1. París es la ciudad <select><option value='c'>que</option><option value='x'>donde</option></select> más me gusta. <span class="story-translation">Paris is the city that I like the most.</span></p><p>2. Es el lugar <select><option value='c'>donde</option><option value='x'>que</option></select> quiero vivir. <span class="story-translation">It is the place where I want to live.</span></p>` }
+];
+
+const dragItemsData = [
+    { text: "El libro...", type: "que" },
+    { text: "La ciudad...", type: "donde" },
+    { text: "La persona...", type: "que" },
+    { text: "El parque...", type: "donde" },
+    { text: "El coche...", type: "que" },
+    { text: "La casa...", type: "donde" },
+    { text: "El restaurante...", type: "donde" },
+    { text: "Los amigos...", type: "que" },
+    { text: "La oficina...", type: "donde" },
+    { text: "El ordenador...", type: "que" },
+    { text: "El colegio...", type: "donde" },
+    { text: "El teléfono...", type: "que" },
+    { text: "La playa...", type: "donde" },
+    { text: "El gato...", type: "que" },
+    { text: "El hotel...", type: "donde" },
+    { text: "La comida...", type: "que" },
+    { text: "El país...", type: "donde" },
+    { text: "La carta...", type: "que" },
+    { text: "El jardín...", type: "donde" },
+    { text: "El profesor...", type: "que" }
+];
+
+const flashcards = [
+    {en: "The book that I am reading is very long.", es: "El libro <strong>que</strong> estoy leyendo es muy largo.", explanation: "Antecedent 'Libro' (Thing) -> Use 'Que'."},
+    {en: "This is the park where we met.", es: "Este es el parque <strong>donde</strong> nos conocimos.", explanation: "Antecedent 'Parque' (Place) + Location context -> Use 'Donde'."},
+    {en: "The woman with whom I was speaking is my aunt.", es: "La mujer con <strong>quien</strong> estaba hablando es mi tía.", explanation: "Preposition 'Con' + Person -> Use 'Quien'."},
+    {en: "The reasons for which I did it are clear.", es: "Las razones por <strong>las cuales</strong> lo hice son claras.", explanation: "Formal structure: Preposition + Article + Cual/Cuales."},
+    {en: "The students who study pass the exam.", es: "Los estudiantes <strong>que</strong> estudian aprueban el examen.", explanation: "Antecedent 'Estudiantes' (People) -> 'Que' is standard."}
+];
+
+let currentLang = 'en';
+let currentCard = 0;
+let selectedDragItem = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // TABS
+    window.changeMainTab = function(evt, tabId) {
+        document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('is-active'));
+        document.querySelectorAll('.main-tab-nav button').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('is-active');
+        evt.currentTarget.classList.add('active');
+        
+        if (tabId === 'tab-practica') {
+            if(!document.getElementById('quiz-container').hasChildNodes()) generateQuiz();
+            if(!document.getElementById('story-container').hasChildNodes()) generateStory();
+            if(!document.getElementById('drag-items-pool').hasChildNodes()) generateDragDrop();
+        }
+        if (tabId === 'tab-bank') renderBank();
+        if (tabId === 'tab-flashcards') loadCard();
+    }
+
+    // VISUALIZER
+    window.showViz = function(btn, antecedent, pronoun, rest, explanation) {
+        document.querySelectorAll('.formula-toggle').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const res = document.getElementById('viz-result');
+        const moodClass = pronoun === 'donde' ? 'fc-pronoun' : 'fc-pronoun'; 
+        
+        res.innerHTML = `<div class='formula-card fc-antecedent'>${antecedent}</div> <div class='formula-card ${moodClass}'>${pronoun}</div> ${rest}`;
+        speak(antecedent + " " + pronoun + " " + rest);
+    }
+
+    // QUIZ
+    document.getElementById('generate-quiz').addEventListener('click', generateQuiz);
+    function generateQuiz() {
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+        const qs = [...quizItems].sort(() => 0.5 - Math.random()).slice(0, 5);
+        qs.forEach((q, i) => {
+            const cleanQ = q.q.replace(/\(([^)]+)\)/, '___');
+            let html = `<div class="quiz-question"><p><strong>${i+1}. ${cleanQ}</strong> <span class="tts-icon" onclick="speak('${q.q.replace(/[\(\)]/g, '')}')">🔊</span></p><p style="font-size:0.9em;color:#666; font-style:italic;">${q.context_en}</p><div>`;
+            q.options.forEach((opt, idx) => html += `<button onclick="checkQuiz(this, ${idx === q.correct}, '${q.exp}')">${opt}</button>`);
+            html += `</div><div class="feedback"></div><div class="explanation-text" style="display:none"></div></div>`;
+            container.innerHTML += html;
+        });
+    }
+    window.checkQuiz = function(btn, isCorrect, exp) {
+        const p = btn.parentElement.parentElement;
+        p.querySelectorAll('button').forEach(b => b.disabled = true);
+        const fb = p.querySelector('.feedback');
+        const exT = p.querySelector('.explanation-text');
+        exT.textContent = exp; exT.style.display = 'block';
+        if(isCorrect) { fb.textContent = "Correct! 👍"; fb.className = "feedback correct"; btn.style.background = "var(--green)"; btn.style.color = "white"; }
+        else { fb.textContent = "Incorrect 😕"; fb.className = "feedback incorrect"; btn.style.background = "var(--red)"; btn.style.color = "white"; }
+    }
+
+    // STORY
+    document.getElementById('generate-story').addEventListener('click', generateStory);
+    document.getElementById('check-story-btn').addEventListener('click', () => {
+        document.querySelectorAll('#story-container select').forEach(s => {
+            s.style.backgroundColor = s.value === 'c' ? "#d4edda" : "#f8d7da";
+        });
+    });
+    function generateStory() {
+        const s = storyData[Math.floor(Math.random() * storyData.length)];
+        document.getElementById('story-container').innerHTML = `<h3>${s.title}</h3>${s.html}`;
+    }
+
+    // DRAG DROP
+    document.getElementById('generate-drag').addEventListener('click', generateDragDrop);
+    function generateDragDrop() {
+        const pool = document.getElementById('drag-items-pool');
+        const zQue = document.querySelector('#zone-que .zone-content');
+        const zDonde = document.querySelector('#zone-donde .zone-content');
+        pool.innerHTML = ''; zQue.innerHTML = ''; zDonde.innerHTML = '';
+        document.getElementById('drag-feedback').textContent = '';
+        
+        dragItemsData.sort(()=>0.5-Math.random()).forEach(item => {
+            const el = document.createElement('div');
+            el.className = 'draggable';
+            el.textContent = item.text;
+            el.dataset.type = item.type;
+            el.onclick = () => selectDragItem(el);
+            pool.appendChild(el);
+        });
+    }
+    
+    function selectDragItem(el) {
+        if(el.parentElement.classList.contains('zone-content')) return;
+        document.querySelectorAll('.draggable').forEach(d => d.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedDragItem = el;
+    }
+    
+    window.handleDrop = function(zoneType) {
+        if(!selectedDragItem) return;
+        const correct = selectedDragItem.dataset.type === zoneType;
+        const fb = document.getElementById('drag-feedback');
+        
+        if(correct) {
+            selectedDragItem.classList.remove('selected');
+            selectedDragItem.style.cursor = 'default';
+            selectedDragItem.onclick = null;
+            if(zoneType === 'que') document.querySelector('#zone-que .zone-content').appendChild(selectedDragItem);
+            else document.querySelector('#zone-donde .zone-content').appendChild(selectedDragItem);
+            selectedDragItem = null;
+            fb.textContent = "Correct! 🎉"; fb.className = "feedback correct";
+        } else {
+            fb.textContent = "Try again! ❌"; fb.className = "feedback incorrect";
+        }
+    }
+
+    // BANK
+    function renderBank() {
+        const c = document.getElementById('bankContainer');
+        if(c.children.length > 0) return;
+        phraseBankData.forEach(i => {
+            const d = document.createElement('div');
+            d.className = `verb-card verb-${i.cat}`; d.dataset.cat = i.cat;
+            d.innerHTML = `<div class="verb-header"><span class="verb-title">${i.text}</span><div><button class="btn-explain" onclick="showModal('${i.text}','${i.struct}','${i.ex_es}','${i.ex_en}')">Explain</button><span class="tts-icon" data-tts="${i.ex_es}">🔊</span></div></div><p>${i.ex_es}</p>`;
+            c.appendChild(d);
+        });
+    }
+    window.filterBank = function(btn, cat) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.verb-card').forEach(c => c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'block' : 'none');
+    }
+
+    // MODAL
+    window.showModal = (t, s, es, en) => {
+        document.getElementById('modal-title').textContent = t;
+        document.getElementById('modal-struct').textContent = s;
+        document.getElementById('modal-ex-es').textContent = es;
+        document.getElementById('modal-ex-es').dataset.tts = es; 
+        document.getElementById('modal-ex-en').textContent = en; 
+        document.getElementById('explain-modal').style.display = 'flex';
+    }
+    window.closeModal = () => document.getElementById('explain-modal').style.display = 'none';
+
+    // FLASHCARDS & UTILS
+    function loadCard() {
+        const c = flashcards[currentCard];
+        document.getElementById('card-front').innerHTML = c.en;
+        document.getElementById('card-back').innerHTML = `${c.es}<br><small>${c.explanation}</small>`;
+        document.getElementById('flashcard').classList.remove('is-flipped');
+    }
+    window.flipCard = () => document.getElementById('flashcard').classList.toggle('is-flipped');
+    window.nextCard = () => { currentCard = (currentCard + 1) % flashcards.length; loadCard(); };
+    window.prevCard = () => { currentCard = (currentCard - 1 + flashcards.length) % flashcards.length; loadCard(); };
+    
+    window.toggleLang = () => {
+        currentLang = currentLang === 'en' ? 'es' : 'en';
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+            if(uiData[currentLang][el.dataset.langKey]) el.innerHTML = uiData[currentLang][el.dataset.langKey];
+        });
+        loadCard();
+    };
+    window.toggleTheme = () => document.body.classList.toggle('dark-mode');
+    
+    window.speak = (txt) => {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(txt); u.lang = 'es-ES';
+        window.speechSynthesis.speak(u);
+    };
+    document.body.addEventListener('click', e => {
+        if(e.target.classList.contains('tts-icon')) { e.stopPropagation(); speak(e.target.dataset.tts); }
+    });
+
+    loadCard();
+});
+</script>
+</body>
+</html>
