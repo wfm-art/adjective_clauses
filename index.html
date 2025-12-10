@@ -7,7 +7,7 @@
     
     <style>
         :root {
-            /* --- PALETA MAESTRA (GOLDEN FORMAT) --- */
+            /* --- PALETA MAESTRA --- */
             --primary: #007bff;       /* Azul Principal */
             --dark-blue: #0056b3;     /* Azul Oscuro */
             --green: #28a745;         /* Verde Éxito */
@@ -53,7 +53,7 @@
         header h1 { margin: 10px 0 5px; font-size: 2rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
         header p { margin: 5px 0 0; opacity: 0.95; font-size: 1.1rem; }
         
-        /* BOTONES SUPERIORES (Translate & Theme) */
+        /* BOTONES SUPERIORES */
         .top-btn { position: absolute; top: 15px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 8px 12px; border-radius: 20px; cursor: pointer; font-size: 1rem; transition: all 0.2s; font-weight: bold; }
         .top-btn:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
         .lang-btn { left: 15px; }
@@ -73,6 +73,7 @@
         .action-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
         .action-btn.secondary { background: var(--green); }
         .action-btn.warning { background: var(--yellow); color: #333; }
+        .action-btn.orange { background: var(--orange); color: white; }
         .explain-btn { padding: 5px 12px; font-size: 0.85rem; border-radius: 20px; background: var(--dark-blue); }
 
         .metaphor-box { text-align: center; padding: 30px; background: var(--light-gray-bg); border-radius: 12px; border: 2px dashed var(--border-color); margin-bottom: 30px; }
@@ -83,7 +84,7 @@
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 30px 0; box-shadow: var(--shadow); background: #000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* VISUALIZADOR DE FÓRMULA (CSS RESTAURADO) */
+        /* VISUALIZADOR DE FÓRMULA */
         .formula-visualizer { background: var(--container-bg); padding: 20px; border-radius: 12px; border: 2px solid var(--primary); margin-top: 30px; text-align: center; }
         .visualizer-display { font-size: 1.3rem; margin: 20px 0; padding: 15px; background: var(--light-gray-bg); border-radius: 8px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; align-items: center; }
         .vis-part { padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
@@ -156,7 +157,6 @@
         <button class="tab-btn" onclick="openTab('flashcards')" data-lang-key="tab_flashcards">⚡ Flashcards</button>
     </div>
 
-    <!-- PESTAÑA 1: CONCEPTO -->
     <div id="metaphor" class="tab-content active">
         <div class="metaphor-box">
             <h2 class="metaphor-title" data-lang-key="meta_title">La Metáfora: La Etiquetadora (The Label Maker)</h2>
@@ -172,7 +172,6 @@
             <iframe src="https://drive.google.com/file/d/1GvLKweVVyGK7NV56g-Lo3DvjSXqjQwW2/preview" allow="autoplay"></iframe>
         </div>
 
-        <!-- Fórmula Visual Interactiva (RESTAURADO) -->
         <div class="formula-visualizer">
             <h3 style="color: var(--primary); margin-top: 0;" data-lang-key="vis_title">🧙‍♂️ Fórmula Visual Interactiva</h3>
             <p data-lang-key="vis_desc">Haz clic en los botones para construir la frase y ver cómo cambia el conector.</p>
@@ -190,9 +189,23 @@
                 <button class="action-btn secondary" onclick="updateVisualizer('lugar')">🏙️ Lugar</button>
             </div>
         </div>
+
+        <hr style="border: 0; border-top: 3px dashed var(--orange); margin: 50px 0;">
+        <div class="metaphor-box" style="border-color: var(--orange); background: rgba(253, 126, 20, 0.05);">
+            <h2 class="metaphor-title" style="color: var(--orange);" data-lang-key="meta_lvl2_title">⚓ NIVEL 2: La Metáfora del Ancla</h2>
+            <p data-lang-key="meta_lvl2_desc">Cuando usas preposiciones (<em>en, con, a, de</em>), el "QUE" es débil. Necesitas un <strong>ANCLA</strong> (el, la, los, las) para sostenerlo.</p>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-top: 25px; font-size: 1.2rem;">
+                <div style="background: var(--container-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">🏠 La casa</div>
+                <div style="font-weight: bold; color: var(--orange);">+ EN</div>
+                <div style="background: var(--orange); color: white; padding: 10px; border-radius: 8px; font-weight: bold; transform: rotate(-5deg); box-shadow: var(--shadow);">LA (Ancla)</div>
+                <div style="font-weight: bold;">+ QUE</div>
+                <div>vivo.</div>
+            </div>
+            <p style="margin-top: 20px; font-weight: bold; color: var(--dark-blue);">Resultado: La casa EN LA QUE vivo.</p>
+        </div>
     </div>
 
-    <!-- PESTAÑA 2: FÓRMULA -->
     <div id="formula" class="tab-content">
         <h3 data-lang-key="formula_title">📐 La Fórmula de Conexión</h3>
         <p data-lang-key="formula_desc">El "pegamento" (conector) cambia dependiendo de qué estamos describiendo.</p>
@@ -233,13 +246,37 @@
             <h4 style="margin-top: 0;" data-lang-key="rule_title">⚠️ Regla de Oro</h4>
             <p data-lang-key="rule_desc">Si hay una preposición (a, con, de...) antes del conector y es persona, DEBES usar <strong>QUIEN</strong>.</p>
         </div>
+
+        <hr style="border: 0; border-top: 3px dashed var(--orange); margin: 50px 0;">
+        <h3 style="color: var(--orange);" data-lang-key="vis_lvl2_title">📐 Fórmula Nivel 2: Preposición + Artículo + Que</h3>
+        <p data-lang-key="vis_lvl2_desc">Selecciona el ejemplo para ver la estructura lógica:</p>
+
+        <div class="formula-visualizer" style="border-color: var(--orange);">
+            <div style="margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                <button class="action-btn" style="background: white; color: #333; border: 1px solid #ccc;" onclick="setPrepFormula('El chico', 'con', 'el', 'vine')">👦 El chico</button>
+                <button class="action-btn" style="background: white; color: #333; border: 1px solid #ccc;" onclick="setPrepFormula('La herramienta', 'con', 'la', 'trabajé')">🛠️ La herramienta</button>
+                <button class="action-btn" style="background: white; color: #333; border: 1px solid #ccc;" onclick="setPrepFormula('Los amigos', 'con', 'los', 'viajé')">✈️ Los amigos</button>
+                <button class="action-btn" style="background: white; color: #333; border: 1px solid #ccc;" onclick="setPrepFormula('Las tijeras', 'con', 'las', 'corté')">✂️ Las tijeras</button>
+            </div>
+
+            <div class="visualizer-display" style="background: rgba(253, 126, 20, 0.05);">
+                <span id="demo-noun" class="vis-part" style="background: white; border-color: #ddd;">El chico</span>
+                <span id="demo-prep" class="vis-part" style="font-weight:bold; background: transparent;">+ CON +</span>
+                <span id="demo-art" class="vis-part" style="background: var(--orange); color: white; transform: scale(1.1);">EL</span>
+                <span id="demo-rest" class="vis-part" style="font-weight:bold; background: transparent;">+ QUE vine</span>
+            </div>
+            <p id="demo-result" style="font-weight: bold; font-size: 1.3rem; color: var(--dark-blue); min-height: 1.5em; margin-top: 15px;">El chico con el que vine.</p>
+        </div>
     </div>
 
-    <!-- PESTAÑA 3: FRASES (EXPANDIDO A 10) -->
     <div id="phrases" class="tab-content">
         <h3 data-lang-key="phrases_title">💬 Banco de Frases Útiles</h3>
         <p data-lang-key="phrases_desc">Haz clic en "Explicar" para ver detalles y escuchar.</p>
         <div id="phrase-list"></div>
+
+        <hr style="border: 0; border-top: 3px dashed var(--orange); margin: 50px 0;">
+        <h3 style="color: var(--orange);" data-lang-key="phrases_lvl2_title">💬 Frases Nivel 2: Preposiciones Complejas</h3>
+        <div id="phrase-list-adv"></div>
 
         <div id="phrase-modal" class="modal">
             <div class="modal-content">
@@ -255,12 +292,12 @@
         </div>
     </div>
 
-    <!-- PESTAÑA 4: PRÁCTICA -->
     <div id="practice" class="tab-content">
-        <div style="text-align: center; margin-bottom: 25px; background: var(--light-gray-bg); padding: 15px; border-radius: 12px;">
+        <div style="text-align: center; margin-bottom: 25px; background: var(--light-gray-bg); padding: 15px; border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
             <button class="action-btn" onclick="loadQuiz()" data-lang-key="btn_quiz">📝 Quiz (Part 1)</button>
             <button class="action-btn secondary" onclick="loadStory()" data-lang-key="btn_story">📖 Story (Part 2)</button>
             <button class="action-btn warning" onclick="loadDragDrop()" data-lang-key="btn_sorter">🤏 Sorter (Part 3)</button>
+            <button class="action-btn orange" onclick="loadQuizAdv()" data-lang-key="btn_quiz_lvl2">⚓ Nivel 2</button>
         </div>
 
         <div id="quiz-section" class="hidden">
@@ -303,10 +340,23 @@
                 <button class="action-btn" onclick="checkSorter()" data-lang-key="btn_check_sorter">✅ Check Sorter</button>
             </div>
         </div>
+
+        <div id="practice-adv" class="hidden" style="background: rgba(253, 126, 20, 0.05); padding: 20px; border-radius: 12px; border: 1px solid var(--orange);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="color: var(--orange); margin:0;" data-lang-key="practice_lvl2_title">⚓ Nivel 2: Desafío de Preposiciones</h3>
+                <button class="action-btn orange" onclick="generateNewQuizAdv()">🔄 Nuevo</button>
+            </div>
+            <p data-lang-key="practice_lvl2_desc">Elige el artículo correcto (el, la, los, las) para completar la frase.</p>
+            <div id="quiz-adv-container" style="margin-top: 20px;"></div>
+        </div>
     </div>
 
-    <!-- PESTAÑA 5: FLASHCARDS -->
     <div id="flashcards" class="tab-content">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button class="action-btn" onclick="switchDeck('basic')" data-lang-key="btn_deck_basic">Nivel 1 (Básico)</button>
+            <button class="action-btn orange" onclick="switchDeck('adv')" data-lang-key="btn_deck_adv">Nivel 2 (Prep)</button>
+        </div>
+
         <div class="flashcard-container" id="flashcard-container">
             <div class="flashcard-inner" id="flashcard">
                 <div class="flashcard-front">
@@ -359,7 +409,18 @@
             quiz_note: "Nota: ¡El audio lee el contexto para ayudarte!",
             story_title: "📖 Parte 2: Completa la Historia", btn_new_story: "🔄 Nueva Historia", btn_check: "✅ Verificar",
             sorter_title: "🤏 Parte 3: Clasificador Drag & Drop", btn_new_sorter: "🔄 Nuevo Sorter", btn_check_sorter: "✅ Verificar",
-            btn_prev: "⬅️ Anterior", btn_next: "Siguiente ➡️", fc_tap: "(Haz clic para girar 👆)"
+            btn_prev: "⬅️ Anterior", btn_next: "Siguiente ➡️", fc_tap: "(Haz clic para girar 👆)",
+            // KEYS NIVEL 2
+            meta_lvl2_title: "⚓ NIVEL 2: La Metáfora del Ancla",
+            meta_lvl2_desc: "Cuando usas preposiciones (en, con...), el 'QUE' es débil. Necesitas un ANCLA (el, la, los, las).",
+            vis_lvl2_title: "📐 Fórmula Nivel 2: Preposición + Artículo + Que",
+            vis_lvl2_desc: "Selecciona el ejemplo para ver la estructura lógica:",
+            phrases_lvl2_title: "💬 Frases Nivel 2: Preposiciones Complejas",
+            practice_lvl2_title: "⚓ Nivel 2: Desafío de Preposiciones",
+            practice_lvl2_desc: "Elige el artículo correcto (el, la, los, las) para completar la frase.",
+            btn_quiz_lvl2: "⚓ Nivel 2 (Preposiciones)",
+            btn_deck_basic: "Nivel 1 (Básico)",
+            btn_deck_adv: "Nivel 2 (Prep)"
         },
         en: {
             subtitle: "Connect ideas with: Que, Quien, Donde, Lo que",
@@ -388,7 +449,18 @@
             quiz_note: "Note: Audio reads the context to help you!",
             story_title: "📖 Part 2: Complete the Story", btn_new_story: "🔄 New Story", btn_check: "✅ Check Answers",
             sorter_title: "🤏 Part 3: Drag & Drop Sorter", btn_new_sorter: "🔄 New Sorter", btn_check_sorter: "✅ Check Sorter",
-            btn_prev: "⬅️ Previous", btn_next: "Next ➡️", fc_tap: "(Click to flip 👆)"
+            btn_prev: "⬅️ Previous", btn_next: "Next ➡️", fc_tap: "(Click to flip 👆)",
+            // KEYS NIVEL 2
+            meta_lvl2_title: "⚓ LEVEL 2: The Anchor Metaphor",
+            meta_lvl2_desc: "When using prepositions (en, con...), 'QUE' is weak. You need an ANCHOR (el, la, los, las).",
+            vis_lvl2_title: "📐 Level 2 Formula: Preposition + Article + Que",
+            vis_lvl2_desc: "Select the object to see which 'Anchor' (article) you need.",
+            phrases_lvl2_title: "💬 Level 2 Phrases: Complex Prepositions",
+            practice_lvl2_title: "⚓ Level 2: Preposition Challenge",
+            practice_lvl2_desc: "Choose the correct article (el, la, los, las) to complete the phrase.",
+            btn_quiz_lvl2: "⚓ Level 2 (Prepositions)",
+            btn_deck_basic: "Level 1 (Basic)",
+            btn_deck_adv: "Level 2 (Prep)"
         }
     };
 
@@ -400,7 +472,39 @@
         });
     }
 
-    // --- VISUALIZER LOGIC (RESTAURADO) ---
+    // --- SISTEMA DE VOZ BLINDADO ---
+    let voices = [];
+    function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+    if (speechSynthesis.onvoiceschanged !== undefined) { speechSynthesis.onvoiceschanged = loadVoices; }
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        
+        // 1. SOLUCIÓN AL DELETREO Y EMOJIS: 
+        // - .toLowerCase(): Evita que QUE se lea Q-U-E
+        // - regex: Elimina todo lo que NO sea letra, número o puntuación básica
+        let cleanText = text.toLowerCase()
+                            .replace(/[\u{1F600}-\u{1F6FF}]/gu, '') // Adiós emojis
+                            .replace(/[^a-z0-9áéíóúñü\s,.\?!]/g, '') // Filtro estricto (solo letras/tildes)
+                            .replace(/\s+/g, ' ')
+                            .trim();
+
+        const u = new SpeechSynthesisUtterance(cleanText);
+        u.lang = 'es-ES'; 
+        u.rate = 0.9;
+
+        if (voices.length === 0) voices = window.speechSynthesis.getVoices();
+        
+        // Preferir Google o Microsoft en español
+        const spanishVoice = voices.find(v => v.lang.includes('es') && (v.name.includes('Google') || v.name.includes('Microsoft'))) ||
+                             voices.find(v => v.lang.startsWith('es')); 
+
+        if (spanishVoice) { u.voice = spanishVoice; }
+
+        window.speechSynthesis.speak(u);
+    }
+
+    // --- VISUALIZER LOGIC (NIVEL 1) ---
     function updateVisualizer(type) {
         const ant = document.getElementById('vis-ant');
         const con = document.getElementById('vis-con');
@@ -423,7 +527,7 @@
         setTimeout(() => con.style.transform = 'scale(1.1)', 300);
     }
 
-    // --- 1. EXPANDED PHRASES (10 ITEMS) ---
+    // --- DATA ---
     const phrasesData = [
         { es: "El libro 📘 que estoy leyendo es fascinante.", en: "The book that I am reading is fascinating.", note: "Uso básico de 'que' para cosas." },
         { es: "La mujer 👩‍💼 con quien hablé era mi jefa.", en: "The woman with whom I spoke was my boss.", note: "'Quien' es obligatorio después de preposición." },
@@ -437,7 +541,6 @@
         { es: "Es el chico a quien 🎁 di el regalo.", en: "He is the boy to whom I gave the gift.", note: "Preposición 'a' + quien (objeto indirecto)." }
     ];
 
-    // --- 2. DATA: QUIZ (20 ITEMS) ---
     const quizData = [
         { q: "El chico 👦 ___ vive allí es mi amigo.", options: ["que", "quien", "donde"], a: "que", audio: "El chico que vive allí es mi amigo." },
         { q: "La chica 👧 con ___ fui al cine es Ana.", options: ["quien", "que", "donde"], a: "quien", audio: "La chica con quien fui al cine es Ana." },
@@ -448,20 +551,10 @@
         { q: "El parque 🌳 ___ jugamos de niños ya no existe.", options: ["donde", "que", "quien"], a: "donde", audio: "El parque donde jugamos de niños ya no existe." },
         { q: "La novela 📖 ___ me prestaste es muy larga.", options: ["que", "quien", "donde"], a: "que", audio: "La novela que me prestaste es muy larga." },
         { q: "El hombre 👨‍🦳 de ___ te hablé es mi tío.", options: ["quien", "que", "donde"], a: "quien", audio: "El hombre de quien te hablé es mi tío." },
-        { q: "No escuché ___ 👂 dijiste.", options: ["lo que", "que", "donde"], a: "lo que", audio: "No escuché lo que dijiste." },
-        { q: "La casa 🏡 ___ compramos tiene jardín.", options: ["que", "donde", "quien"], a: "que", audio: "La casa que compramos tiene jardín." },
-        { q: "La razón ❓ por la ___ vine es secreta.", options: ["que", "quien", "donde"], a: "que", audio: "La razón por la que vine es secreta." },
-        { q: "El médico 👨‍⚕️ ___ me atendió fue amable.", options: ["que", "quien", "donde"], a: "que", audio: "El médico que me atendió fue amable." },
-        { q: "El hotel 🏨 ___ nos quedamos era caro.", options: ["donde", "que", "quien"], a: "donde", audio: "El hotel donde nos quedamos era caro." },
-        { q: "Todo ___ ✨ brilla no es oro.", options: ["lo que", "que", "donde"], a: "lo que", audio: "Todo lo que brilla no es oro." },
-        { q: "Las amigas 👯‍♀️ con ___ salgo son divertidas.", options: ["quienes", "que", "donde"], a: "quienes", audio: "Las amigas con quienes salgo son divertidas." },
-        { q: "El perro 🐕 ___ ladra no muerde.", options: ["que", "quien", "donde"], a: "que", audio: "El perro que ladra no muerde." },
-        { q: "El museo 🏛️ ___ visitamos era enorme.", options: ["que", "donde", "quien"], a: "que", audio: "El museo que visitamos era enorme." },
-        { q: "Ese es el lugar 📍 ___ perdí mis llaves.", options: ["donde", "que", "quien"], a: "donde", audio: "Ese es el lugar donde perdí mis llaves." },
-        { q: "Haz ___ 👍 quieras.", options: ["lo que", "que", "donde"], a: "lo que", audio: "Haz lo que quieras." }
+        { q: "No escuché ___ 👂 dijiste.", options: ["lo que", "que", "donde"], a: "lo que", audio: "No escuché lo que dijiste." }
     ];
 
-    // --- 3. DATA: STORIES (10 STORIES) ---
+    // --- EXPANDED STORIES (5 Sentences Each) ---
     const storiesData = [
         `<strong>Historia 1: El Restaurante</strong><br>
         Ayer fui a un restaurante 🍽️ <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> me recomendaste hace tiempo. 
@@ -496,105 +589,64 @@
         La casa <select class="story-input" data-ans="donde"><option value="">___</option><option value="donde">donde</option><option value="que">que</option></select> se celebró el evento era enorme y tenía piscina.
         La música 🎵 <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> puso el DJ era genial y todos bailaron.
         Conocí a una chica <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="quien">quien</option></select> bailaba salsa increíblemente bien.
-        Fue una noche <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> recordaremos por mucho tiempo.`,
-
-        `<strong>Historia 6: Mi Hermano</strong><br>
-        Mi hermano mayor 👦, <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="quien">quien</option></select> vive en Madrid desde hace años, vino ayer de visita.
-        Trajo un regalo especial 🎁 <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="lo que">lo que</option></select> me encantó y me hizo llorar.
-        Es alguien con <select class="story-input" data-ans="quien"><option value="">___</option><option value="quien">quien</option><option value="que">que</option></select> siempre me divierto mucho cuando estamos juntos.
-        Fuimos al parque <select class="story-input" data-ans="donde"><option value="">___</option><option value="donde">donde</option><option value="que">que</option></select> jugábamos de pequeños.
-        <select class="story-input" data-ans="Lo que"><option value="">___</option><option value="Lo que">Lo que</option><option value="Que">Que</option></select> más me gusta es escuchar sus historias de viajes.`,
-
-        `<strong>Historia 7: El Trabajo</strong><br>
-        El trabajo 💼 <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> tengo ahora es bastante difícil y estresante.
-        La oficina <select class="story-input" data-ans="donde"><option value="">___</option><option value="donde">donde</option><option value="lo que">lo que</option></select> paso ocho horas al día queda muy lejos de mi casa.
-        <select class="story-input" data-ans="Lo que"><option value="">___</option><option value="Lo que">Lo que</option><option value="Que">Que</option></select> más me gusta, sin embargo, son mis compañeros de equipo.
-        El jefe para <select class="story-input" data-ans="quien"><option value="">___</option><option value="quien">quien</option><option value="que">que</option></select> trabajo es exigente pero justo.
-        Es una oportunidad <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> debo aprovechar para mi carrera.`,
-
-        `<strong>Historia 8: El Coche Nuevo</strong><br>
-        Por fin compré un coche 🚗 <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="quien">quien</option></select> es muy rápido y de color rojo brillante.
-        El vendedor a <select class="story-input" data-ans="quien"><option value="">___</option><option value="quien">quien</option><option value="que">que</option></select> se lo compré fue muy honesto con el precio.
-        Es el coche <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> siempre quise tener desde que era niño.
-        El garaje <select class="story-input" data-ans="donde"><option value="">___</option><option value="donde">donde</option><option value="que">que</option></select> lo guardo es seguro y amplio.
-        No sabes <select class="story-input" data-ans="lo que"><option value="">___</option><option value="lo que">lo que</option><option value="que">que</option></select> disfruto conduciendo por la carretera.`,
-
-        `<strong>Historia 9: Mi Ciudad Natal</strong><br>
-        La ciudad 🏙️ <select class="story-input" data-ans="donde"><option value="">___</option><option value="donde">donde</option><option value="que">que</option></select> nací ha cambiado mucho en los últimos diez años.
-        Las calles por las <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="quienes">quienes</option></select> caminaba ahora están llenas de tiendas modernas.
-        Pero la gente <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> vive allí sigue siendo igual de amable y acogedora.
-        Hay un nuevo parque <select class="story-input" data-ans="donde"><option value="">___</option><option value="donde">donde</option><option value="quien">quien</option></select> los niños juegan felices.
-        <select class="story-input" data-ans="Lo que"><option value="">___</option><option value="Lo que">Lo que</option><option value="Que">Que</option></select> más extraño es la comida tradicional de mi abuela.`,
-
-        `<strong>Historia 10: El Libro Misterioso</strong><br>
-        No entiendo <select class="story-input" data-ans="lo que"><option value="">___</option><option value="lo que">lo que</option><option value="que">que</option></select> dice este libro 📚 antiguo en el primer capítulo.
-        El autor, <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="quien">quien</option></select> es muy famoso en su país, escribe de forma rara.
-        Es un tema del <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="quien">quien</option></select> no sé absolutamente nada.
-        La biblioteca <select class="story-input" data-ans="donde"><option value="">___</option><option value="donde">donde</option><option value="que">que</option></select> lo encontré es un lugar silencioso y mágico.
-        Es una historia <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="quien">quien</option></select> te atrapa desde la primera página.`
+        Fue una noche <select class="story-input" data-ans="que"><option value="">___</option><option value="que">que</option><option value="donde">donde</option></select> recordaremos por mucho tiempo.`
     ];
 
-    // --- 4. DATA: SORTER (60 ITEMS) ---
     const dragData = [
         { text: "El libro 📘 ___ leí.", type: "que", audio: "El libro que leí." },
-        { text: "La pizza 🍕 ___ comí.", type: "que", audio: "La pizza que comí." },
         { text: "La chica con ___ 💃 bailé.", type: "other", audio: "La chica con quien bailé." },
         { text: "El parque ___ 🌳 corro.", type: "other", audio: "El parque donde corro." },
-        { text: "___ 🤔 piensas.", type: "other", audio: "Lo que piensas." },
-        // ... (Agregando los 60 items completos)
-        { text: "El país 🌍 ___ visité.", type: "que", audio: "El país que visité." },
-        { text: "La casa 🏠 ___ compré.", type: "que", audio: "La casa que compré." },
-        { text: "El jefe de ___ 👔 dependo.", type: "other", audio: "El jefe de quien dependo." },
-        { text: "La canción 🎵 ___ escucho.", type: "que", audio: "La canción que escucho." },
-        { text: "El regalo 🎁 ___ me diste.", type: "que", audio: "El regalo que me diste." },
-        { text: "La carta ✉️ ___ escribí.", type: "que", audio: "La carta que escribí." },
-        { text: "El coche 🚗 ___ alquilé.", type: "que", audio: "El coche que alquilé." },
-        { text: "La flor 🌸 ___ huele bien.", type: "que", audio: "La flor que huele bien." },
-        { text: "El agua 💧 ___ bebo.", type: "que", audio: "El agua que bebo." },
-        { text: "La mesa 🪑 ___ rompí.", type: "que", audio: "La mesa que rompí." },
-        { text: "El chico 👦 ___ corre.", type: "que", audio: "El chico que corre." },
-        { text: "La mujer 👩 ___ canta.", type: "que", audio: "La mujer que canta." },
-        { text: "El gato 🐈 ___ duerme.", type: "que", audio: "El gato que duerme." },
-        { text: "La llave 🔑 ___ perdí.", type: "que", audio: "La llave que perdí." },
-        { text: "El teléfono 📱 ___ suena.", type: "que", audio: "El teléfono que suena." },
-        { text: "La ropa 👗 ___ uso.", type: "que", audio: "La ropa que uso." },
-        { text: "El juego 🎮 ___ juego.", type: "que", audio: "El juego que juego." },
-        { text: "La foto 🖼️ ___ miré.", type: "que", audio: "La foto que miré." },
-        { text: "El video 📹 ___ grabé.", type: "que", audio: "El video que grabé." },
-        { text: "El dinero 💰 ___ gané.", type: "que", audio: "El dinero que gané." },
-        { text: "La luz 💡 ___ brilla.", type: "que", audio: "La luz que brilla." },
-        { text: "El pan 🥖 ___ horneé.", type: "que", audio: "El pan que horneé." },
-        { text: "El hombre a ___ 🤝 saludé.", type: "other", audio: "El hombre a quien saludé." },
-        { text: "Los amigos con ___ 🗣️ hablo.", type: "other", audio: "Los amigos con quienes hablo." },
-        { text: "La madre para ___ 🎁 compré esto.", type: "other", audio: "La madre para quien compré esto." },
-        { text: "El cine ___ 🍿 fuimos.", type: "other", audio: "El cine donde fuimos." },
-        { text: "El hotel ___ 🏨 dormí.", type: "other", audio: "El hotel donde dormí." },
-        { text: "El bar ___ 🍻 bebimos.", type: "other", audio: "El bar donde bebimos." },
-        { text: "La escuela ___ 🏫 estudio.", type: "other", audio: "La escuela donde estudio." },
-        { text: "___ ❤️ sientes.", type: "other", audio: "Lo que sientes." },
-        { text: "___ 👂 escuchas.", type: "other", audio: "Lo que escuchas." },
-        { text: "___ 👀 ves.", type: "other", audio: "Lo que ves." },
-        { text: "___ 🤷‍♂️ pasa.", type: "other", audio: "Lo que pasa." },
-        { text: "___ 🗣️ dijiste.", type: "other", audio: "Lo que dijiste." },
-        { text: "La playa ___ 🏖️ nado.", type: "other", audio: "La playa donde nado." },
-        { text: "El alumno a ___ 🎓 enseño.", type: "other", audio: "El alumno a quien enseño." },
-        { text: "La tía con ___ ☕ meriendo.", type: "other", audio: "La tía con quien meriendo." },
-        { text: "El hospital ___ 🏥 trabajo.", type: "other", audio: "El hospital donde trabajo." },
-        { text: "___ 🛠️ haces.", type: "other", audio: "Lo que haces." },
-        { text: "___ ✨ importa.", type: "other", audio: "Lo que importa." },
-        { text: "El jardín ___ 🌷 descanso.", type: "other", audio: "El jardín donde descanso." },
-        { text: "La persona de ___ 💭 pienso.", type: "other", audio: "La persona de quien pienso." },
-        { text: "___ 🛑 prohiben.", type: "other", audio: "Lo que prohiben." }
+        { text: "___ 🤔 piensas.", type: "other", audio: "Lo que piensas." }
     ];
 
-    // --- 5. DATA: FLASHCARDS ---
+    // --- DATA NIVEL 2 ---
+    const phrasesAdv = [
+        {es: "El chico con el que hablé.", en: "The boy with whom I spoke.", note: "Chico (M) -> con EL que."},
+        {es: "La casa en la que vivo.", en: "The house in which I live.", note: "Casa (F) -> en LA que."},
+        {es: "Los documentos sin los que viajo.", en: "The docs without which I travel.", note: "Documentos (Pl M) -> sin LOS que."},
+        {es: "Las razones por las que lloré.", en: "The reasons for which I cried.", note: "Razones (Pl F) -> por LAS que."},
+        {es: "El tema del que hablamos.", en: "The topic about which we spoke.", note: "De + el = DEL que."}
+    ];
+
+    const quizDataAdv = [
+        {q: "El parque en _____ corremos.", opts: ["el que", "la que", "los que"], a: "el que"},
+        {q: "La silla en _____ me senté.", opts: ["la que", "el que", "las que"], a: "la que"},
+        {q: "Los amigos con _____ salí.", opts: ["los que", "el que", "las que"], a: "los que"},
+        {q: "Las ciudades por _____ viajé.", opts: ["las que", "los que", "la que"], a: "las que"},
+        {q: "El lápiz con _____ escribo.", opts: ["el que", "la que", "lo que"], a: "el que"}
+    ];
+
     const flashcardsData = [
         { en: "The book 📘 that I bought", es: "El libro que compré" },
         { en: "The girl 👧 with whom I study", es: "La chica con quien estudio" },
-        { en: "The place 🏠 where we eat", es: "El lugar donde comemos" },
-        { en: "What 💡 (that which) you want", es: "Lo que quieres" },
-        { en: "The people 👥 who help me", es: "Las personas que me ayudan" },
-        { en: "A house 🏡 that has a pool", es: "Una casa que tenga piscina" }
+        { en: "The place 🏠 where we eat", es: "El lugar donde comemos" }
+    ];
+    
+    // MAZO AMPLIADO (23 ITEMS)
+    const flashcardsAdv = [
+        {en: "The house in which I live", es: "La casa en LA que vivo"},
+        {en: "The boy with whom I spoke", es: "El chico con EL que hablé"},
+        {en: "The friends with whom I went", es: "Los amigos con LOS que fui"},
+        {en: "The pen with which I write", es: "La pluma con LA que escribo"},
+        {en: "The bridge under which we walked", es: "El puente bajo EL que caminamos"},
+        {en: "The chair on which I sit", es: "La silla sobre LA que me siento"},
+        {en: "The students to whom I teach", es: "Los alumnos a LOS que enseño"},
+        {en: "The windows through which I look", es: "Las ventanas por LAS que miro"},
+        {en: "The reason for which I came", es: "La razón por LA que vine"},
+        {en: "The topic about which we talked", es: "El tema del que hablamos"},
+        {en: "The company for which I work", es: "La empresa para LA que trabajo"},
+        {en: "The tools with which I build", es: "Las herramientas con LAS que construyo"},
+        {en: "The day on which we met", es: "El día en EL que nos conocimos"},
+        {en: "The boat on which I sail", es: "El barco en EL que navego"},
+        {en: "The laws against which they protested", es: "Las leyes contra LAS que protestaron"},
+        {en: "The knife with which I cut", es: "El cuchillo con EL que corto"},
+        {en: "The shoes with which I run", es: "Los zapatos con LOS que corro"},
+        {en: "The city towards which we travel", es: "La ciudad hacia LA que viajamos"},
+        {en: "The girls with whom I dance", es: "Las chicas con LAS que bailo"},
+        {en: "The notebook in which I write", es: "El cuaderno en EL que escribo"},
+        {en: "The building from which I left", es: "El edificio DEL que salí"},
+        {en: "The project on which I work", es: "El proyecto en EL que trabajo"},
+        {en: "The table under which the cat hides", es: "La mesa bajo LA que se esconde el gato"}
     ];
 
     // --- LOGIC ---
@@ -606,17 +658,6 @@
     }
 
     function toggleTheme() { document.body.classList.toggle('dark-mode'); }
-
-    function speak(text) {
-        window.speechSynthesis.cancel();
-        // Filtrar emojis para evitar redundancia
-        const cleanText = text.replace(/\p{Emoji_Presentation}/gu, '').trim();
-        const u = new SpeechSynthesisUtterance(cleanText);
-        u.lang = 'es-ES'; u.rate = 0.9;
-        const v = window.speechSynthesis.getVoices().find(v => (v.name.includes('Google') || v.name.includes('Monica')) && v.lang.includes('es'));
-        if(v) u.voice = v;
-        window.speechSynthesis.speak(u);
-    }
 
     // Modal
     const phraseList = document.getElementById('phrase-list');
@@ -646,13 +687,37 @@
         return array;
     }
 
-    // Activities
-    function loadQuiz() {
-        document.getElementById('quiz-section').classList.remove('hidden');
+    // Activities Navigation (Consolidated)
+    function hideAllPractice() {
+        document.getElementById('quiz-section').classList.add('hidden');
         document.getElementById('story-section').classList.add('hidden');
         document.getElementById('drag-section').classList.add('hidden');
+        document.getElementById('practice-adv').classList.add('hidden');
+    }
+
+    function loadQuiz() {
+        hideAllPractice();
+        document.getElementById('quiz-section').classList.remove('hidden');
         if(document.getElementById('quiz-container').innerHTML === "") generateNewQuiz();
     }
+    function loadStory() {
+        hideAllPractice();
+        document.getElementById('story-section').classList.remove('hidden');
+        if(document.getElementById('story-container').innerHTML === "") generateNewStory();
+    }
+    function loadDragDrop() {
+        hideAllPractice();
+        document.getElementById('drag-section').classList.remove('hidden');
+        if(document.getElementById('drag-items-container').innerHTML === "") generateNewSorter();
+    }
+    
+    function loadQuizAdv() {
+        hideAllPractice();
+        document.getElementById('practice-adv').classList.remove('hidden');
+        if(document.getElementById('quiz-adv-container').innerHTML === "") generateNewQuizAdv();
+    }
+
+    // --- QUIZ LOGIC (Level 1) ---
     function generateNewQuiz() {
         const c = document.getElementById('quiz-container'); c.innerHTML = '';
         shuffleArray([...quizData]).slice(0, 5).forEach((item, i) => {
@@ -672,12 +737,31 @@
         f.classList.remove('hidden');
     }
 
-    function loadStory() {
-        document.getElementById('quiz-section').classList.add('hidden');
-        document.getElementById('story-section').classList.remove('hidden');
-        document.getElementById('drag-section').classList.add('hidden');
-        if(document.getElementById('story-container').innerHTML === "") generateNewStory();
+    // --- QUIZ LOGIC (Level 2) ---
+    function generateNewQuizAdv() {
+        const c = document.getElementById('quiz-adv-container'); c.innerHTML = '';
+        shuffleArray([...quizDataAdv]).forEach((item, i) => {
+            let div = document.createElement('div'); div.className = 'quiz-question'; div.style.borderLeftColor = 'var(--orange)';
+            let html = `<p><strong>${i+1}.</strong> ${item.q}</p><div class="options-grid">`;
+            item.opts.forEach(opt => html += `<button class="option-btn" onclick="checkQuizAdv(this, '${opt}', '${item.a}')">${opt}</button>`);
+            div.innerHTML = html + `</div><p class="feedback hidden"></p>`;
+            c.appendChild(div);
+        });
     }
+    function checkQuizAdv(btn, sel, cor) {
+        const p = btn.closest('.quiz-question');
+        const f = p.querySelector('.feedback');
+        p.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+        if(sel === cor) { 
+            btn.classList.add('correct'); btn.style.backgroundColor='#d4edda'; f.style.color='#155724'; f.innerText="¡Correcto! El artículo coincide."; 
+            speak("Correcto");
+        } else { 
+            btn.classList.add('incorrect'); btn.style.backgroundColor='#f8d7da'; f.style.color='#721c24'; f.innerText=`Incorrecto. Respuesta: ${cor}`; 
+        }
+        f.classList.remove('hidden');
+    }
+
+    // --- STORY LOGIC ---
     function generateNewStory() {
         document.getElementById('story-container').innerHTML = storiesData[Math.floor(Math.random() * storiesData.length)];
     }
@@ -688,13 +772,8 @@
         if(allOk && inp.length > 0) speak("¡Excelente trabajo!");
     }
 
+    // --- SORTER LOGIC ---
     let draggedItem = null;
-    function loadDragDrop() {
-        document.getElementById('quiz-section').classList.add('hidden');
-        document.getElementById('story-section').classList.add('hidden');
-        document.getElementById('drag-section').classList.remove('hidden');
-        if(document.getElementById('drag-items-container').innerHTML === "") generateNewSorter();
-    }
     function generateNewSorter() {
         const c = document.getElementById('drag-items-container'); c.innerHTML = '';
         document.querySelectorAll('.drop-zone').forEach(z => { 
@@ -713,7 +792,7 @@
         });
     }
     
-    // iPad Touch
+    // Touch Logic
     let tEl=null, tX=0, tY=0;
     function handleTouchStart(e) { if(e.target.classList.contains('tts-icon')) return; tEl=e.currentTarget; const t=e.targetTouches[0]; const r=tEl.getBoundingClientRect(); tX=t.clientX-r.left; tY=t.clientY-r.top; tEl.style.position='fixed'; tEl.style.zIndex=1000; tEl.style.width=r.width+'px'; tEl.style.left=(t.clientX-tX)+'px'; tEl.style.top=(t.clientY-tY)+'px'; document.body.appendChild(tEl); e.preventDefault(); }
     function handleTouchMove(e) { if(!tEl)return; const t=e.targetTouches[0]; tEl.style.left=(t.clientX-tX)+'px'; tEl.style.top=(t.clientY-tY)+'px'; e.preventDefault(); }
@@ -730,12 +809,26 @@
         if(tot>0 && sc===tot) speak("¡Perfecto!");
     }
 
-    // Flashcards
+    // --- FORMULA INTERACTIVE ---
+    function setPrepFormula(noun, prep, art, verb) {
+        document.getElementById('demo-noun').innerText = noun;
+        document.getElementById('demo-prep').innerText = "+ " + prep.toUpperCase() + " +";
+        document.getElementById('demo-art').innerText = art.toUpperCase();
+        document.getElementById('demo-rest').innerText = "+ QUE " + verb;
+        
+        let sentence = `${noun} ${prep} ${art} que ${verb}.`;
+        document.getElementById('demo-result').innerHTML = sentence;
+        speak(sentence);
+    }
+
+    // --- FLASHCARDS ---
     let fcIdx = 0;
+    let currentFlashcards = flashcardsData; 
+
     function updateCard() {
         document.getElementById('flashcard-container').classList.remove('is-flipped');
         setTimeout(() => {
-            let d = flashcardsData[fcIdx];
+            let d = currentFlashcards[fcIdx];
             document.getElementById('fc-front').innerText = d.en;
             document.getElementById('fc-back-es').innerText = d.es;
             document.getElementById('fc-back-en').innerText = d.en;
@@ -745,12 +838,33 @@
         }, 200);
     }
     document.getElementById('flashcard').onclick=(e)=>{ if(!e.target.classList.contains('tts-icon')) document.getElementById('flashcard-container').classList.toggle('is-flipped'); };
-    function nextCard() { fcIdx=(fcIdx+1)%flashcardsData.length; updateCard(); }
-    function prevCard() { fcIdx=(fcIdx-1+flashcardsData.length)%flashcardsData.length; updateCard(); }
+    function nextCard() { fcIdx=(fcIdx+1)%currentFlashcards.length; updateCard(); }
+    function prevCard() { fcIdx=(fcIdx-1+currentFlashcards.length)%currentFlashcards.length; updateCard(); }
+    
+    function switchDeck(type) {
+        currentFlashcards = (type === 'adv') ? flashcardsAdv : flashcardsData;
+        fcIdx = 0;
+        updateCard();
+        speak(type === 'adv' ? "Nivel Avanzado" : "Nivel Básico");
+    }
 
-    window.speechSynthesis.getVoices();
+    // --- FILL NIVEL 2 LIST ---
+    const advList = document.getElementById('phrase-list-adv');
+    if(advList) {
+        phrasesAdv.forEach(p => {
+            let div = document.createElement('div');
+            div.className = 'phrase-item';
+            div.style.borderLeftColor = 'var(--orange)';
+            div.innerHTML = `<span style="font-size: 1.1rem;">${p.es}</span> <button class="action-btn orange" style="font-size:0.8rem; padding: 5px 10px;">Explicar ⚓</button>`;
+            div.querySelector('button').addEventListener('click', (e) => { e.stopPropagation(); openModal(p); });
+            advList.appendChild(div);
+        });
+    }
+
+    // Init Logic
+    loadVoices(); // Intentar cargar voces al inicio
     updateCard();
-    updateVisualizer('persona'); // Init visualizer
+    updateVisualizer('persona'); 
 </script>
 </body>
 </html>
