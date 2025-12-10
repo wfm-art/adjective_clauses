@@ -601,7 +601,7 @@
 
     // --- DATA NIVEL 2 ---
     const phrasesAdv = [
-        {es: "El chico con el que vine.", en: "The boy I came with.", note: "Chico (M) -> con EL que."},
+        {es: "El chico con el que hablé.", en: "The boy with whom I spoke.", note: "Chico (M) -> con EL que."},
         {es: "La casa en la que vivo.", en: "The house in which I live.", note: "Casa (F) -> en LA que."},
         {es: "Los documentos sin los que viajo.", en: "The docs without which I travel.", note: "Documentos (Pl M) -> sin LOS que."},
         {es: "Las razones por las que lloré.", en: "The reasons for which I cried.", note: "Razones (Pl F) -> por LAS que."},
@@ -743,7 +743,10 @@
         shuffleArray([...quizDataAdv]).forEach((item, i) => {
             let div = document.createElement('div'); div.className = 'quiz-question'; div.style.borderLeftColor = 'var(--orange)';
             let html = `<p><strong>${i+1}.</strong> ${item.q}</p><div class="options-grid">`;
-            item.opts.forEach(opt => html += `<button class="option-btn" onclick="checkQuizAdv(this, '${opt}', '${item.a}')">${opt}</button>`);
+            
+            // CORRECCIÓN AQUÍ: Agregamos shuffleArray([...item.opts]) para que la correcta no sea siempre la primera
+            shuffleArray([...item.opts]).forEach(opt => html += `<button class="option-btn" onclick="checkQuizAdv(this, '${opt}', '${item.a}')">${opt}</button>`);
+            
             div.innerHTML = html + `</div><p class="feedback hidden"></p>`;
             c.appendChild(div);
         });
